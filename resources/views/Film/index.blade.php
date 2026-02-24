@@ -1,27 +1,65 @@
-@extends('layouts.master')
+<div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h4 class="mb-0">Data Film</h4>
+        <a href="{{ route('buku.create') }}" class="btn btn-primary">
+            + Tambah Film
+        </a>
+    </div>
 
-@section('content')
-
-    <div class="card">
-        <div class="card-header d-flex justify-content-between align-items-center">
-            <h4 class="mb-0">Data Buku</h4>
-            <a href="{{ route('buku.create') }}" class="btn btn-primary">
-                + Tambah Film
-            </a>
-        </div>
-
-        <div class="table-responsive"></div>
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-bordered table-hover align-middle text-center">
-                    <thead class="table-light">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover align-middle text-center">
+                <thead class="table-light">
+                    <tr>
+                        <th>Kode</th>
+                        <th>Judul Film</th>
+                        <th>Tahun</th>
+                        <th>Jam Tayang</th>
+                        <th>Cover</th>
+                        <th width="150">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse ($buku as $item)
                         <tr>
-                            <th>Kode</th>
-                            <th>Judul Film</th>
-                            <th>Tahun</th>
-                            <th>Jam Tayang</th>
-                            <th>Cover</th>
-                            <th width="150">Aksi</th>
+                            <td>{{ $item->kode }}</td>
+                            <td>{{ $item->judul }}</td>
+                            <td>{{ $item->tahun }}</td>
+                            <td>{{ $item->jam_tayang }}</td>
+                            <td>
+                                @if($item->cover)
+                                    <img src="{{ asset('storage/' . $item->cover) }}" 
+                                         width="80">
+                                @else
+                                    Tidak ada
+                                @endif
+                            </td>
+                            <td>
+                                <a href="{{ route('buku.edit', $item->id) }}" 
+                                   class="btn btn-warning btn-sm">
+                                    Edit
+                                </a>
+
+                                <form action="{{ route('buku.destroy', $item->id) }}" 
+                                      method="POST" 
+                                      class="d-inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" 
+                                            class="btn btn-danger btn-sm"
+                                            onclick="return confirm('Yakin hapus data?')">
+                                        Hapus
+                                    </button>
+                                </form>
+                            </td>
                         </tr>
-            </div>
-@endsection
+                    @empty
+                        <tr>
+                            <td colspan="6">Data belum tersedia</td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
