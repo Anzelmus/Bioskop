@@ -1,7 +1,7 @@
 <div class="card">
     <div class="card-header d-flex justify-content-between align-items-center">
         <h4 class="mb-0">Data Film</h4>
-        <a href="{{ route('buku.create') }}" class="btn btn-primary">
+        <a href="{{ route('film.create') }}" class="btn btn-primary">
             + Tambah Film
         </a>
     </div>
@@ -20,7 +20,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse ($buku as $item)
+                    @forelse ($film as $item)
                         <tr>
                             <td>{{ $item->kode }}</td>
                             <td>{{ $item->judul }}</td>
@@ -35,12 +35,12 @@
                                 @endif
                             </td>
                             <td>
-                                <a href="{{ route('buku.edit', $item->id) }}" 
+                                <a href="{{ route('film.edit', $item->id) }}" 
                                    class="btn btn-warning btn-sm">
                                     Edit
                                 </a>
 
-                                <form action="{{ route('buku.destroy', $item->id) }}" 
+                                <form action="{{ route('film.destroy', $item->id) }}" 
                                       method="POST" 
                                       class="d-inline">
                                     @csrf
